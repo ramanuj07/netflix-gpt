@@ -2,10 +2,16 @@ import { useRef, useState } from "react";
 import { BG_IMAGE } from "../utils/constants";
 import { userLoginSchema } from "../utils/validations";
 import Header from "./Header";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
-  const [loginError, setLoginError] = useState(null);
+  const [loginError, setLoginError] = useState([]);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const name = useRef("");
   const email = useRef("");
@@ -21,17 +27,84 @@ const Login = () => {
       confirmPassword: confirmPassword.current.value,
     });
 
-    if (result.success) {
-      setLoginError(null); // Reset error state
-      // Proceed with sign-in or sign-up logic
+    if (!result.success) {
+      setLoginError(result.error.errors);
+      return;
+    }
+
+    setLoginError([]);
+
+    // Sign in and Sign up logic
+
+    if (!isSignIn) {
+      // Sign up logic
+
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          setSuccessMessage("User signed up successfully");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          switch (errorCode) {
+            case "auth/email-already-in-use":
+              setLoginError([
+                { message: "Email is already in use. Please sign in." },
+              ]);
+              break;
+            case "auth/weak-password":
+              setLoginError([
+                {
+                  message:
+                    "Password is too weak. Please choose a stronger password.",
+                },
+              ]);
+              break;
+            default:
+              setLoginError([{ message: errorMessage }]);
+              break;
+          }
+        });
     } else {
-      setLoginError(result.error.errors); // Set the error messages
+      // Sign in logic
+
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          switch (errorCode) {
+            case "auth/user-not-found":
+              setLoginError([{ message: "User not found. Please sign up." }]);
+              break;
+            case "auth/wrong-password":
+              setLoginError([
+                { message: "Incorrect password. Please try again." },
+              ]);
+              break;
+            default:
+              setLoginError([{ message: "Invalid user credentials" }]);
+              break;
+          }
+        });
     }
   };
 
   const toggleSignInForm = () => {
     setIsSignIn(!isSignIn);
-    setLoginError(null);
+    setLoginError([]);
   };
 
   return (
@@ -86,11 +159,15 @@ const Login = () => {
         </button>
 
         {loginError && (
-          <div className="text-red-500 mt-2">
+          <div className="text-red-500 mt-2 font-bold">
             {loginError.map((error, index) => (
               <p key={index}>{error.message}</p>
             ))}
           </div>
+        )}
+
+        {!isSignIn && successMessage && (
+          <div className="text-green-500 mt-2 font-bold">{successMessage}</div>
         )}
 
         {isSignIn && (
