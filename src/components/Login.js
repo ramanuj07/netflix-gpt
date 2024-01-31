@@ -5,13 +5,19 @@ import Header from "./Header";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [loginError, setLoginError] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const name = useRef("");
   const email = useRef("");
@@ -47,7 +53,22 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
+          console.log(user);
           setSuccessMessage("User signed up successfully");
+          updateProfile(auth.currentUser, {
+            displayName: name.current.value,
+            photoURL: "https://example.com/jane-q-user/profile.jpg",
+          })
+            .then(() => {
+              const { uid, email, displayName } = auth.currentUser;
+              dispatch(
+                addUser({ uid: uid, email: email, displayName: displayName })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setLoginError([{ message: "Error logging in" }]);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -82,6 +103,8 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+          console.log(user);
+          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -116,7 +139,7 @@ const Login = () => {
 
       <form
         action=""
-        className="w-4/12 p-10 bg-opacity-85 absolute text-white my-36 mx-auto right-0 left-0 bg-black rounded-lg"
+        className="w-4/12 p-10 bg-opacity-85 absolute text-white my-32 mx-auto right-0 left-0 bg-black rounded-lg"
         onSubmit={(e) => e.preventDefault()}
       >
         <h1 className="py-4 my-2 text-3xl font-bold">
@@ -157,6 +180,18 @@ const Login = () => {
         >
           {isSignIn ? "Sign In" : "Sign Up"}
         </button>
+
+        {isSignIn && (
+          <div>
+            <div className="text-center font-semibold underline mt-2 text-pink-400">
+              Mock login
+            </div>
+            <div className="text-[#b5e509] mt-2">
+              Email- netflix@cracked.com
+            </div>
+            <div className="text-[#b5e509] mt-2">Password- Netflix@123</div>
+          </div>
+        )}
 
         {loginError && (
           <div className="text-red-500 mt-2 font-bold">
