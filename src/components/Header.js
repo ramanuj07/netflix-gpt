@@ -44,7 +44,11 @@ const Header = () => {
 
       {user && (
         <div className="flex items-center gap-2">
-          <img src={USER_AVATAR} alt="avatar" className="h-10 w-10" />
+          <img
+            src={USER_AVATAR}
+            alt="avatar"
+            className="cursor-pointer h-10 w-10"
+          />
           <button
             className="bg-[#E50914] text-white p-2 m-2 rounded-lg hover:bg-red-800"
             onClick={handleSignOut}

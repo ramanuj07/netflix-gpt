@@ -8,6 +8,7 @@ const useNowPlayingMovies = () => {
 
   useEffect(() => {
     fetchMovieList();
+    // eslint-disable-next-line
   }, []);
 
   const fetchMovieList = async () => {
