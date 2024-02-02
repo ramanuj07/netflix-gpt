@@ -1,12 +1,9 @@
-import React from "react";
+import { IMG_BASE_CDN_URL } from "../utils/constants";
 
-const MovieCard = ({ data }) => {
-  const { title } = data;
+const MovieCard = ({ posterPath }) => {
   return (
-    <div className="flex">
-      <div className="p-2 m-2 border border-gray-200 w-68">
-        <h1>{title}</h1>
-      </div>
+    <div className="w-56 cursor-pointer">
+      <img alt="Movie Card" src={IMG_BASE_CDN_URL + posterPath} />
     </div>
   );
 };
