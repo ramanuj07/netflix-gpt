@@ -1,4 +1,5 @@
 import React from "react";
+import { playIconSvg, moreInfoSvg } from "../utils/svg/svg";
 
 const VideoTitle = ({ title, description }) => {
   return (
@@ -6,11 +7,11 @@ const VideoTitle = ({ title, description }) => {
       <h1 className="font-bold text-4xl">{title}</h1>
       <p className="py-6 text-lg w-1/3">{description}</p>
       <div className="flex gap-3">
-        <button className="bg-white text-black hover:bg-opacity-80 text-xl py-2 px-12 rounded-lg ">
-          ▶️ Play
+        <button className="bg-white text-black hover:bg-opacity-80 text-xl py-2 px-12 rounded-lg flex gap-2 items-center">
+          {playIconSvg} Play
         </button>
-        <button className="bg-gray-600 text-white text-xl py-2 px-12 rounded-lg">
-          More Info
+        <button className="bg-gray-600 text-white hover:bg-opacity-80 text-xl py-2 px-12 rounded-lg flex gap-2 items-center">
+          {moreInfoSvg} More Info
         </button>
       </div>
     </div>

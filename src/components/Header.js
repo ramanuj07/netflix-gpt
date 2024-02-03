@@ -5,11 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { searchIconSvg, homeIconSvg } from "../utils/svg/svg";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView());
+  };
 
   const handleSignOut = () => {
     signOut(auth)
@@ -43,7 +50,13 @@ const Header = () => {
       </div>
 
       {user && (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
+          <div
+            className="text-white p-2 cursor-pointer"
+            onClick={handleGptSearchClick}
+          >
+            {showGptSearch ? homeIconSvg : searchIconSvg}
+          </div>
           <img
             src={USER_AVATAR}
             alt="avatar"
