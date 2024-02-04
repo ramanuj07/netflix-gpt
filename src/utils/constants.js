@@ -11,8 +11,7 @@ export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZjgwZThlZDVkNDJmZmMwOTUwOTI4OTNiM2U2OTY4OSIsInN1YiI6IjY1YmJlNzBjNDU5YWQ2MDE3YTZjOWVkYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xIP4is0B1RyL4KjrD97xPBtBqCkNeR5Q5EGmCx7faAY",
+    Authorization: "Bearer " + process.env.REACT_APP_TMDB_KEY,
   },
 };
 
@@ -28,4 +27,8 @@ export const TOP_RATED_MOVIES =
 export const UPCOMING_MOVIES =
   "https://api.themoviedb.org/3/movie/upcoming?page=1";
 
+export const SEARCH_MOVIES = "https://api.themoviedb.org/3/search/movie?query=";
+
 export const IMG_BASE_CDN_URL = "https://image.tmdb.org/t/p/w500/";
+
+export const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;

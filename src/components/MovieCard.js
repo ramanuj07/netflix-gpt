@@ -2,9 +2,11 @@ import { IMG_BASE_CDN_URL } from "../utils/constants";
 
 const MovieCard = ({ posterPath }) => {
   return (
-    <div className="w-56 cursor-pointer">
-      <img alt="Movie Card" src={IMG_BASE_CDN_URL + posterPath} />
-    </div>
+    posterPath && (
+      <div className="w-56 cursor-pointer">
+        <img alt="Movie Card" src={IMG_BASE_CDN_URL + posterPath} />
+      </div>
+    )
   );
 };
 

@@ -46,7 +46,9 @@ const Header = () => {
   return (
     <div className="flex justify-between px-20 w-screen py-2 absolute bg-gradient-to-b from-black z-10">
       <div>
-        <img src={LOGO_IMAGE} alt="logo" className="w-44 cursor-pointer" />
+        <a href="/browse">
+          <img src={LOGO_IMAGE} alt="logo" className="w-44 cursor-pointer" />
+        </a>
       </div>
 
       {user && (
