@@ -9,37 +9,30 @@ const GptSearchBar = () => {
   const searchText = useRef(null);
   const dispatch = useDispatch();
 
-  const getMovieSearchRecommendations = async (movie) => {
-    const movieData = await fetch(
-      SEARCH_MOVIES + searchText.current.value + "&page=1",
-      API_OPTIONS
-    );
+  const getMovieSearchRecommendations = async (movieName) => {
+    const movieData = await fetch(SEARCH_MOVIES + movieName, API_OPTIONS);
 
     const json = await movieData.json();
 
-    return json.results.filter(
-      (m) => m.original_language === "en" || m.original_language === "hi"
-    );
+    return json.results;
   };
 
   const handleGptSearchClick = async () => {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const gptQuery =
-      "Act as a movie recommendation system and suggest some movies for the query : " +
+      "Act as a movie recommendation system and suggest movies for the query : " +
       searchText.current.value +
       ". Only give me names for 5 movies, comma separated like the example result given ahead. Example Result: Shiddat, 12th Fail, Mr. Robot, The Shawshank Redemption, Spirited Away";
 
     const gptResults = await model.generateContent(gptQuery);
-    const response = gptResults.response;
-    const text = response.text();
+    const response = await gptResults.response.text();
 
-    const gptMovies = text.split(",");
+    const gptMovies = response.split(",");
 
     const movieData = gptMovies.map((movie) =>
       getMovieSearchRecommendations(movie)
     );
     const searchResults = await Promise.all(movieData);
-    console.log(searchResults);
 
     dispatch(
       addGptMovieResult({ movieNames: gptMovies, movieResults: searchResults })
@@ -55,7 +48,7 @@ const GptSearchBar = () => {
       >
         <input
           type="text"
-          placeholder="Search your favourite movies"
+          placeholder="Search any movie or genre you like"
           ref={searchText}
           className="py-2 px-4 m-2 border border-black rounded-lg col-span-9"
         />

@@ -20,6 +20,11 @@ const MovieTrailer = () => {
           allowFullScreen
         ></iframe>
       )}
+      {!movieTrailer && (
+        <div className="text-white text-xl absolute top-0 left-0 w-full h-full flex items-center justify-center">
+          No trailer for this video is found
+        </div>
+      )}
     </div>
   );
 };

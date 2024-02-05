@@ -1,7 +1,6 @@
 import MovieCard from "./MovieCard";
 
 const MovieList = ({ title, movies }) => {
-  console.log(movies);
   return (
     <div className="px-4 ">
       <h1 className="text-3xl font-semibold py-6 text-white">{title}</h1>
