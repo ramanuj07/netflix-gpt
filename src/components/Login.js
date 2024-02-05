@@ -127,15 +127,19 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img src={BG_IMAGE} alt="bgImage" />
+        <img
+          src={BG_IMAGE}
+          alt="bgImage"
+          className="h-screen object-cover md:w-screen md:h-screen"
+        />
       </div>
 
       <form
         action=""
-        className="w-4/12 p-10 bg-opacity-85 absolute text-white my-32 mx-auto right-0 left-0 bg-black rounded-lg"
+        className="w-full md:w-4/12 p-4 md:p-10 bg-opacity-85 absolute text-white my-20 md:my-28 mx-auto right-0 left-0 bg-black rounded-lg"
         onSubmit={(e) => e.preventDefault()}
       >
-        <h1 className="py-4 my-2 text-3xl font-bold">
+        <h1 className="py-4 my-2 text-2xl md:text-3xl font-bold">
           {isSignIn ? "Sign In" : "Sign Up"}
         </h1>
 
@@ -205,7 +209,7 @@ const Login = () => {
         )}
 
         {isSignIn && (
-          <div className="flex gap-2 mt-16">
+          <div className="flex gap-2 mt-4 md:mt-12">
             <input type="checkbox" className="w-4" />
             <p>Remember me</p>
           </div>

@@ -44,10 +44,14 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="flex justify-between px-20 w-screen py-2 absolute bg-gradient-to-b from-black z-10">
+    <div className="flex justify-between px-6 md:px-20 w-screen py-2 absolute bg-gradient-to-b from-black z-10">
       <div>
         <a href="/browse">
-          <img src={LOGO_IMAGE} alt="logo" className="w-44 cursor-pointer" />
+          <img
+            src={LOGO_IMAGE}
+            alt="logo"
+            className="mx-auto md:m-0 w-44 cursor-pointer"
+          />
         </a>
       </div>
 
@@ -62,7 +66,7 @@ const Header = () => {
           <img
             src={USER_AVATAR}
             alt="avatar"
-            className="cursor-pointer h-10 w-10"
+            className="hidden md:inline-block md:cursor-pointer md:h-10 md:w-10"
           />
           <button
             className="bg-[#E50914] text-white p-2 m-2 rounded-lg hover:bg-red-800"

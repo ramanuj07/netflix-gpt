@@ -15,7 +15,7 @@ const MoviePage = () => {
   }, []);
 
   return (
-    <div className="flex bg-black h-screen">
+    <div className="flex flex-col sm:flex-row  bg-black h-screen">
       {isLoading ? (
         <Spinner />
       ) : (
@@ -23,6 +23,7 @@ const MoviePage = () => {
           <div className="flex-1 h-full">
             <MovieTrailer />
           </div>
+
           <div className="flex-1 h-full">
             <MovieDetails />
           </div>

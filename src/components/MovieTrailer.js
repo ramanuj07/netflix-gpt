@@ -13,12 +13,14 @@ const MovieTrailer = () => {
   return (
     <div className="h-full w-full relative">
       {movieTrailer && (
-        <iframe
-          className="absolute top-0 left-0 w-full h-full"
-          src={`https://www.youtube.com/embed/${movieTrailer?.key}`}
-          title="YouTube video player"
-          allowFullScreen
-        ></iframe>
+        <div className="aspect-w-16 aspect-h-9">
+          <iframe
+            className="absolute top-0 left-0 w-full h-full"
+            src={`https://www.youtube.com/embed/${movieTrailer?.key}`}
+            title="YouTube video player"
+            allowFullScreen
+          ></iframe>
+        </div>
       )}
       {!movieTrailer && (
         <div className="text-white text-xl absolute top-0 left-0 w-full h-full flex items-center justify-center">
