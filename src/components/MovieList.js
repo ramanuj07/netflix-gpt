@@ -1,6 +1,7 @@
 import MovieCard from "./MovieCard";
 
 const MovieList = ({ title, movies }) => {
+  console.log(movies);
   return (
     <div className="px-4 ">
       <h1 className="text-3xl font-semibold py-6 text-white">{title}</h1>
@@ -8,7 +9,11 @@ const MovieList = ({ title, movies }) => {
         <div className="flex gap-4">
           {movies &&
             movies.map((movie) => (
-              <MovieCard key={movie?.id} posterPath={movie?.poster_path} />
+              <MovieCard
+                key={movie?.id}
+                posterPath={movie?.poster_path}
+                id={movie?.id}
+              />
             ))}
         </div>
       </div>

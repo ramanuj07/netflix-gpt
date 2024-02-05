@@ -1,14 +1,21 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API_OPTIONS } from "../utils/constants";
-import { addTrailerVideo } from "../utils/moviesSlice";
+import { addTrailerVideo, clearTrailerVideo } from "../utils/moviesSlice";
 
 const useMovieTrailer = (id) => {
   const dispatch = useDispatch();
 
+  const trailerVideo = useSelector((store) => store.movies.trailerVideo);
+
   // fetch the video trailer here
   useEffect(() => {
+    if (trailerVideo) {
+      dispatch(clearTrailerVideo());
+    }
+
     fetchMovieTrailer();
+    // eslint-disable-next-line
   }, []);
 
   const fetchMovieTrailer = async () => {
@@ -23,6 +30,7 @@ const useMovieTrailer = (id) => {
 
     dispatch(addTrailerVideo(trailer));
   };
+  return trailerVideo;
 };
 
 export default useMovieTrailer;

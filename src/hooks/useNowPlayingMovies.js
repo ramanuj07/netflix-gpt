@@ -1,13 +1,17 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API_OPTIONS, NOW_PLAYING_MOVIES } from "../utils/constants";
 import { addNowPlayingMovies } from "../utils/moviesSlice";
 
 const useNowPlayingMovies = () => {
   const dispatch = useDispatch();
 
+  const nowPlayingMovies = useSelector(
+    (store) => store.movies.nowPlayingMovies
+  );
+
   useEffect(() => {
-    fetchMovieList();
+    !nowPlayingMovies && fetchMovieList();
     // eslint-disable-next-line
   }, []);
 

@@ -30,7 +30,7 @@ const GptSearchBar = () => {
       ". Only give me names for 5 movies, comma separated like the example result given ahead. Example Result: Shiddat, 12th Fail, Mr. Robot, The Shawshank Redemption, Spirited Away";
 
     const gptResults = await model.generateContent(gptQuery);
-    const response = await gptResults.response;
+    const response = gptResults.response;
     const text = response.text();
 
     const gptMovies = text.split(",");
