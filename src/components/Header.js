@@ -69,7 +69,7 @@ const Header = () => {
             className="hidden md:inline-block md:cursor-pointer md:h-10 md:w-10"
           />
           <button
-            className="bg-[#E50914] text-white p-2 m-2 rounded-lg hover:bg-red-800"
+            className="bg-[#E50914] text-white p-1 md:p-2 m-2 rounded-lg hover:bg-red-800"
             onClick={handleSignOut}
           >
             Sign Out

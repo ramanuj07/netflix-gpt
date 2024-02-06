@@ -1,11 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import genAI from "../utils/geminiAI";
 import { API_OPTIONS } from "../utils/constants";
 import { SEARCH_MOVIES } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addGptMovieResult } from "../utils/gptSlice";
+import Spinner from "./Spinner";
 
 const GptSearchBar = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const searchText = useRef(null);
   const dispatch = useDispatch();
 
@@ -18,6 +20,8 @@ const GptSearchBar = () => {
   };
 
   const handleGptSearchClick = async () => {
+    setIsLoading(true);
+
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const gptQuery =
       "Act as a movie recommendation system and suggest movies for the query : " +
@@ -37,6 +41,13 @@ const GptSearchBar = () => {
     dispatch(
       addGptMovieResult({ movieNames: gptMovies, movieResults: searchResults })
     );
+
+    setIsLoading(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await handleGptSearchClick();
   };
 
   return (
@@ -44,19 +55,20 @@ const GptSearchBar = () => {
       <form
         action=""
         className="w-full m-2 md:w-1/2 bg-slate-700 grid grid-cols-12 rounded-lg"
-        onSubmit={(e) => e.preventDefault(e)}
+        onSubmit={handleSubmit}
       >
         <input
           type="text"
-          placeholder="Search any movie or genre you like"
+          placeholder="Gemini-AI powered search for movies or genres"
           ref={searchText}
           className="py-2 px-4 m-2 border border-black rounded-lg col-span-9"
         />
         <button
           className="py-2 px-4 m-2 rounded-lg bg-[#E50914] text-white col-span-3"
           onClick={handleGptSearchClick}
+          disabled={isLoading}
         >
-          Search
+          {isLoading ? <Spinner /> : "Search"}
         </button>
       </form>
     </div>
