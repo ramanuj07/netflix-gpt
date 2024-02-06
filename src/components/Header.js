@@ -46,13 +46,11 @@ const Header = () => {
   return (
     <div className="flex justify-between px-6 md:px-20 w-screen py-2 absolute bg-gradient-to-b from-black z-10">
       <div>
-        <a href="/browse">
-          <img
-            src={LOGO_IMAGE}
-            alt="logo"
-            className="mx-auto md:m-0 w-44 cursor-pointer"
-          />
-        </a>
+        <img
+          src={LOGO_IMAGE}
+          alt="logo"
+          className="mx-auto md:m-0 w-44 cursor-pointer"
+        />
       </div>
 
       {user && (
