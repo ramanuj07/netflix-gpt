@@ -6,7 +6,7 @@ const MovieList = ({ title, movies }) => {
       <h1 className="text-xl md:text-3xl font-semibold py-6 text-white">
         {title}
       </h1>
-      <div className="flex overflow-x-scroll">
+      <div className="flex overflow-x-scroll scrollbar-hidden">
         <div className="flex gap-4">
           {movies &&
             movies.map((movie) => (
